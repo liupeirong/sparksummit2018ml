@@ -1,4 +1,10 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC 
+# MAGIC This is a multi-class classification problem.  The model predicts 3 different types of Iris flowers. 
+
+# COMMAND ----------
+
 import numpy as np
 import pandas as pd
 import pyspark
