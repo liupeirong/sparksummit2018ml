@@ -53,7 +53,7 @@ val labelSchema = StructType(
 // COMMAND ----------
 
 // MAGIC %md
-// MAGIC ![Alt text](https://github.com/liupeirong/sparksummit2018ml/blob/dev/PredictiveMaintenance/images/1prepTrain.PNG?raw=true)
+// MAGIC # Prepare training data
 
 // COMMAND ----------
 
@@ -66,7 +66,7 @@ display(train_df)
 // COMMAND ----------
 
 // MAGIC %md
-// MAGIC ![Alt text](https://github.com/liupeirong/sparksummit2018ml/blob/dev/PredictiveMaintenance/images/2train.PNG?raw=true)
+// MAGIC # Train the model
 
 // COMMAND ----------
 
@@ -90,7 +90,7 @@ model.asInstanceOf[PipelineModel].stages(1).asInstanceOf[GBTRegressionModel].toD
 // COMMAND ----------
 
 // MAGIC %md
-// MAGIC ![Alt text](https://github.com/liupeirong/sparksummit2018ml/blob/dev/PredictiveMaintenance/images/3prepTest.PNG?raw=true)
+// MAGIC # Prepare test data
 
 // COMMAND ----------
 
@@ -108,7 +108,7 @@ display(test_df)
 // COMMAND ----------
 
 // MAGIC %md
-// MAGIC ![Alt text](https://github.com/liupeirong/sparksummit2018ml/blob/dev/PredictiveMaintenance/images/4evaluate.PNG?raw=true)
+// MAGIC # Evaluate the model
 
 // COMMAND ----------
 
@@ -123,7 +123,7 @@ rmse
 // COMMAND ----------
 
 // MAGIC %md
-// MAGIC ![Alt text](https://github.com/liupeirong/sparksummit2018ml/blob/dev/PredictiveMaintenance/images/5tune.PNG?raw=true)
+// MAGIC # Tuning the model
 
 // COMMAND ----------
 

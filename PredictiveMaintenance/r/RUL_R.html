@@ -11773,7 +11773,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>install.packages<span class="p">(</span><span class="s">&#39;gbm&#39;</span><span class="p">)</span>
@@ -11781,17 +11781,6 @@ div#notebook {
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-</div>
-
 </div>
 </div>
 
@@ -11806,7 +11795,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>train_raw <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;../data/train_FD001.txt&quot;</span><span class="p">,</span> 
@@ -11872,7 +11861,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>train_maxcycle <span class="o">&lt;-</span> setNames<span class="p">(</span>aggregate<span class="p">(</span>cycle<span class="o">~</span>id<span class="p">,</span>train_raw<span class="p">,</span><span class="kp">max</span><span class="p">),</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="s">&quot;max&quot;</span><span class="p">))</span>
@@ -11927,7 +11916,7 @@ train_df <span class="o">&lt;-</span> train_labeled<span class="p">[,</span> <sp
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>test_raw <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;../data/test_FD001.txt&quot;</span><span class="p">,</span> 
@@ -11993,13 +11982,13 @@ train_df <span class="o">&lt;-</span> train_labeled<span class="p">[,</span> <sp
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>test_maxcycle <span class="o">&lt;-</span> aggregate<span class="p">(</span>cycle<span class="o">~</span>id<span class="p">,</span>test_raw<span class="p">,</span><span class="kp">max</span><span class="p">)</span>
 test_maxcycle_only <span class="o">&lt;-</span> <span class="kp">merge</span><span class="p">(</span>test_maxcycle<span class="p">,</span>test_raw<span class="p">)[,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="s">&quot;cycle&quot;</span><span class="p">,</span> <span class="s">&quot;s9&quot;</span><span class="p">,</span> <span class="s">&quot;s11&quot;</span><span class="p">,</span> <span class="s">&quot;s14&quot;</span><span class="p">,</span> <span class="s">&quot;s15&quot;</span><span class="p">)]</span>
 test_ordered <span class="o">=</span> test_maxcycle_only<span class="p">[</span><span class="kp">order</span><span class="p">(</span>test_maxcycle_only<span class="o">$</span>id<span class="p">),</span> <span class="p">]</span>
-<span class="kp">head</span><span class="p">(</span>test_ordered<span class="p">)</span>
+<span class="kp">print</span><span class="p">(</span><span class="kp">head</span><span class="p">(</span>test_ordered<span class="p">),</span> row.names<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12015,22 +12004,16 @@ test_ordered <span class="o">=</span> test_maxcycle_only<span class="p">[</span>
 <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th></th><th scope=col>id</th><th scope=col>cycle</th><th scope=col>s9</th><th scope=col>s11</th><th scope=col>s14</th><th scope=col>s15</th></tr></thead>
-<tbody>
-	<tr><th scope=row>1</th><td>1      </td><td> 31    </td><td>9056.40</td><td>47.23  </td><td>8130.11</td><td>8.4024 </td></tr>
-	<tr><th scope=row>13</th><td>2      </td><td> 49    </td><td>9044.77</td><td>47.67  </td><td>8126.90</td><td>8.4505 </td></tr>
-	<tr><th scope=row>24</th><td>3      </td><td>126    </td><td>9049.26</td><td>47.88  </td><td>8131.46</td><td>8.4119 </td></tr>
-	<tr><th scope=row>35</th><td>4      </td><td>106    </td><td>9051.30</td><td>47.65  </td><td>8133.64</td><td>8.4634 </td></tr>
-	<tr><th scope=row>46</th><td>5      </td><td> 98    </td><td>9053.99</td><td>47.46  </td><td>8125.74</td><td>8.4362 </td></tr>
-	<tr><th scope=row>57</th><td>6      </td><td>105    </td><td>9055.83</td><td>47.51  </td><td>8139.02</td><td>8.4452 </td></tr>
-</tbody>
-</table>
-
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> id cycle      s9   s11     s14    s15
+  1    31 9056.40 47.23 8130.11 8.4024
+  2    49 9044.77 47.67 8126.90 8.4505
+  3   126 9049.26 47.88 8131.46 8.4119
+  4   106 9051.30 47.65 8133.64 8.4634
+  5    98 9053.99 47.46 8125.74 8.4362
+  6   105 9055.83 47.51 8139.02 8.4452
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -12047,7 +12030,7 @@ test_ordered <span class="o">=</span> test_maxcycle_only<span class="p">[</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>rul_df <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;../data/RUL_FD001.txt&quot;</span><span class="p">,</span> 
@@ -12102,11 +12085,11 @@ test_ordered <span class="o">=</span> test_maxcycle_only<span class="p">[</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>test_df <span class="o">&lt;-</span> <span class="kp">cbind</span><span class="p">(</span>test_ordered<span class="p">,</span> rul_df<span class="p">)</span>
-<span class="kp">head</span><span class="p">(</span>test_df<span class="p">)</span>
+<span class="kp">print</span><span class="p">(</span><span class="kp">head</span><span class="p">(</span>test_df<span class="p">),</span> row.names<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12122,22 +12105,16 @@ test_ordered <span class="o">=</span> test_maxcycle_only<span class="p">[</span>
 <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th></th><th scope=col>id</th><th scope=col>cycle</th><th scope=col>s9</th><th scope=col>s11</th><th scope=col>s14</th><th scope=col>s15</th><th scope=col>RUL</th></tr></thead>
-<tbody>
-	<tr><th scope=row>1</th><td>1      </td><td> 31    </td><td>9056.40</td><td>47.23  </td><td>8130.11</td><td>8.4024 </td><td>112    </td></tr>
-	<tr><th scope=row>13</th><td>2      </td><td> 49    </td><td>9044.77</td><td>47.67  </td><td>8126.90</td><td>8.4505 </td><td> 98    </td></tr>
-	<tr><th scope=row>24</th><td>3      </td><td>126    </td><td>9049.26</td><td>47.88  </td><td>8131.46</td><td>8.4119 </td><td> 69    </td></tr>
-	<tr><th scope=row>35</th><td>4      </td><td>106    </td><td>9051.30</td><td>47.65  </td><td>8133.64</td><td>8.4634 </td><td> 82    </td></tr>
-	<tr><th scope=row>46</th><td>5      </td><td> 98    </td><td>9053.99</td><td>47.46  </td><td>8125.74</td><td>8.4362 </td><td> 91    </td></tr>
-	<tr><th scope=row>57</th><td>6      </td><td>105    </td><td>9055.83</td><td>47.51  </td><td>8139.02</td><td>8.4452 </td><td> 93    </td></tr>
-</tbody>
-</table>
-
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> id cycle      s9   s11     s14    s15 RUL
+  1    31 9056.40 47.23 8130.11 8.4024 112
+  2    49 9044.77 47.67 8126.90 8.4505  98
+  3   126 9049.26 47.88 8131.46 8.4119  69
+  4   106 9051.30 47.65 8133.64 8.4634  82
+  5    98 9053.99 47.46 8125.74 8.4362  91
+  6   105 9055.83 47.51 8139.02 8.4452  93
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -12154,7 +12131,7 @@ test_ordered <span class="o">=</span> test_maxcycle_only<span class="p">[</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>formula <span class="o">&lt;-</span> as.formula<span class="p">(</span><span class="s">&quot;RUL ~ cycle + s9 + s11 + s14 + s15&quot;</span><span class="p">)</span>
@@ -12186,7 +12163,7 @@ gbt <span class="o">&lt;-</span> gbm<span class="p">(</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>predictions <span class="o">&lt;-</span> predict<span class="p">(</span>object <span class="o">=</span> gbt<span class="p">,</span> newdata <span class="o">=</span> test_df<span class="p">,</span> n.trees <span class="o">=</span> <span class="m">100</span><span class="p">)</span>
@@ -12217,7 +12194,7 @@ rmse
 
 
 <div class="output_html rendered_html output_subarea ">
-<strong>Root Mean Squared Error:</strong> 26.9009266900212
+<strong>Root Mean Squared Error:</strong> 26.3579871558287
 </div>
 
 </div>
