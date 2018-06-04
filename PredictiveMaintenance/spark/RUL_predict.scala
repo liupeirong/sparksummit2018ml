@@ -44,31 +44,32 @@ val dataSchema = StructType(
 // COMMAND ----------
 
 // MAGIC %md
-// MAGIC ## Load the trained model and make predictions on each row of the input dataframe
+// MAGIC ## Load the trained model and make predictions on new data
 
 // COMMAND ----------
 
 val gbtModel = PipelineModel.load("/mnt/mldata/rul_gbt_regression_model")
 
-val df = spark.readStream.
-  option("delimiter", " ").
-  schema(dataSchema).
-  option("maxFilesPerTrigger", 1).
-  csv("/mnt/mldata/test")
+val df = spark
+  .readStream
+  .option("delimiter", " ")
+  .schema(dataSchema)
+  .csv("/mnt/mldata/test")
 
 val predictions = gbtModel.transform(df)
 
-val query = predictions.select("id", "cycle", "prediction").
-  writeStream.
-  format("memory").
-  queryName("predictedRUL").
-  start
+val query = predictions
+  .select("id", "cycle", "prediction")
+  .writeStream
+  .format("memory")
+  .queryName("predictedRUL")
+  .start
 
 // COMMAND ----------
 
 // MAGIC %md
-// MAGIC ###An example showing predicted cycle vs. existing input cycle on engine 3 
+// MAGIC ###Sanity check predicted remaining cycle vs. current cycle on engine 42
 
 // COMMAND ----------
 
-// MAGIC %sql select id, cycle, prediction from predictedRUL where id = 3 order by cycle 
+// MAGIC %sql select cycle, prediction from predictedRUL where id = 42

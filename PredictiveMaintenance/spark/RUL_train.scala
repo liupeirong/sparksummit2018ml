@@ -57,10 +57,20 @@ val labelSchema = StructType(
 
 // COMMAND ----------
 
-val train_raw = spark.read.schema(dataSchema).option("delimiter", " ").csv("/mnt/mldata/train_FD001.txt")
-val train_maxcycle = train_raw.groupBy("id").max("cycle").select($"id".alias("id_maxcycle"), $"max(cycle)".alias("maxcycle"))
-val train_labeled = train_raw.join(train_maxcycle, $"id" === $"id_maxcycle").withColumn("RUL", $"maxcycle" - $"cycle")
-val train_df = train_labeled.select("id", "cycle", "s9", "s11", "s14", "s15", "RUL")
+val train_raw = spark
+  .read
+  .schema(dataSchema)
+  .option("delimiter", " ")
+  .csv("/mnt/mldata/train_FD001.txt")
+val train_maxcycle = train_raw
+  .groupBy("id")
+  .max("cycle")
+  .select($"id".alias("id_maxcycle"), $"max(cycle)".alias("maxcycle"))
+val train_labeled = train_raw
+  .join(train_maxcycle, $"id" === $"id_maxcycle")
+  .withColumn("RUL", $"maxcycle" - $"cycle")
+val train_df = train_labeled
+  .select("id", "cycle", "s9", "s11", "s14", "s15", "RUL")
 display(train_df)
 
 // COMMAND ----------
@@ -85,7 +95,11 @@ val gbt = new GBTRegressor()
 val pipeline = new Pipeline().setStages(Array(assembler, gbt))
 
 val model = pipeline.fit(train_df)
-model.asInstanceOf[PipelineModel].stages(1).asInstanceOf[GBTRegressionModel].toDebugString
+model
+  .asInstanceOf[PipelineModel]
+  .stages(1)
+  .asInstanceOf[GBTRegressionModel]
+  .toDebugString
 
 // COMMAND ----------
 
@@ -94,15 +108,29 @@ model.asInstanceOf[PipelineModel].stages(1).asInstanceOf[GBTRegressionModel].toD
 
 // COMMAND ----------
 
-val test_raw = spark.read.schema(dataSchema).option("delimiter", " ").csv("/mnt/mldata/test_FD001.txt")
-val test_maxcycle = test_raw.groupBy("id").max("cycle").select($"id".alias("id_maxcycle"), $"max(cycle)".alias("maxcycle"))
-val test_maxconly = test_raw.join(test_maxcycle, $"id" === $"id_maxcycle" && $"cycle" === $"maxcycle")
-val test_ordered = test_maxconly.orderBy("id").select("id", "cycle", "s9", "s11", "s14", "s15")
+val test_raw = spark
+  .read
+  .schema(dataSchema)
+  .option("delimiter", " ")
+  .csv("/mnt/mldata/test_FD001.txt")
+val test_maxcycle = test_raw
+  .groupBy("id")
+  .max("cycle")
+  .select($"id".alias("id_maxcycle"), $"max(cycle)".alias("maxcycle"))
+val test_ordered = test_raw
+  .join(test_maxcycle, $"id" === $"id_maxcycle" && $"cycle" === $"maxcycle")
+  .orderBy("id")
+  .select("id", "cycle", "s9", "s11", "s14", "s15")
 
-val rul_raw = spark.read.schema(labelSchema).option("delimiter", " ").csv("/mnt/mldata/RUL_FD001.txt")
-val rul_ordered = rul_raw.withColumn("id_ordered", monotonically_increasing_id()+1)
-val test_df = test_ordered.join(rul_ordered, $"id" === $"id_ordered").
-  select("id", "cycle", "s9", "s11", "s14", "s15", "RUL")
+val rul_raw = spark
+  .read.schema(labelSchema)
+  .option("delimiter", " ")
+  .csv("/mnt/mldata/RUL_FD001.txt")
+  .withColumn("id_ordered", monotonically_increasing_id()+1)
+
+val test_df = test_ordered
+  .join(rul_raw, $"id" === $"id_ordered")
+  .select("id", "cycle", "s9", "s11", "s14", "s15", "RUL")
 display(test_df)
 
 // COMMAND ----------
@@ -144,12 +172,10 @@ val predictions = model.transform(test_df)
 val rmse = evaluator.evaluate(predictions)
 
 val bestModel = model.bestModel.asInstanceOf[PipelineModel]
-val stages = bestModel.stages
-val gbtModel = stages(1).asInstanceOf[GBTRegressionModel]
+val gbtModel = bestModel.stages(1).asInstanceOf[GBTRegressionModel]
 println("best model: maxDepth = " + gbtModel.getMaxDepth + 
         ", maxIter = " + gbtModel.getMaxIter +
-        ", stepSize = " + gbtModel.getStepSize +
-        ", rmse = " + rmse)
+        ", stepSize = " + gbtModel.getStepSize)
 
 // COMMAND ----------
 
